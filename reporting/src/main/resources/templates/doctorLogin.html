@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1,shrink-to-fit=no">
+    <title>医生登录界面</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="css/signin.css">
+    <script src="js/bootstrap.js" type="application/javascript"></script>
+</head>
+<body class="text-center">
+<!--  用户登录form表单 -->
+<form class="form-signin" action="doDoctorLogin" method="post">
+    <h1 class="h3 mb-3 font-weight-normal">医生登录</h1>
+    <input type="email" class="form-control" autofocus=""
+			placeholder="Email" id="mail" name="mail" th:value="${mail}">
+    <input type="password" class="form-control" placeholder="密码" id="password" name="password"
+			th:value="${password}">
+	<div class="alert alert-danger" role="alert" th:text="${error}"
+			th:if="${error!=null}"></div>
+    <button class="btn btn-lg btn-primary btn-block" type="submit">登录</button>
+</form>
+</body>
+</html>

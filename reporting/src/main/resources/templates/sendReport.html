@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>发送报告</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="css/sendReport.css">
+    <script src="js/bootstrap.js" type="application/javascript"></script>
+
+</head>
+<body>
+
+<div class="container-fluid main">
+    <div class="row">
+
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="page-header">
+                <h2><span class="glyphicon glyphicon-send" aria-hidden="true"></span>    发送诊断报告 </h2>
+            </div>
+            <form action="doSendReport" method="post">
+                <div class="form-group">
+                    <label for="patientMail">Email</label>
+                    <input type="email" class="form-control" id="patientMail" name="patientMail" placeholder="Email" th:value="${patientMail}">
+                </div>
+                <div class="form-group">
+                    <label for="patientName">姓名</label>
+                    <input type="text" class="form-control" id="patientName" name="patientName" placeholder="姓名" th:value="${patientName}">
+                </div>
+                <div class="form-group">
+                    <label for="report">诊断报告</label>
+                    <textarea class="form-control" rows="10" id="report" name="report" th:text="${report}"></textarea>
+                </div>
+                <div>
+                    <label for="medicine">药物</label>
+                    <textarea class="form-control" rows="10" id="medicine" name="medicine" th:text="${medicine}"></textarea>
+                </div>
+                <div class="alert alert-danger" role="alert" th:text="${error}"
+			th:if="${error!=null}"></div>
+                <button class="btn btn-success btn-send" id="send" type="submit">发送</button>
+            </form>
+
+
+        </div>
+    </div>
+</div>
+</body>
+</html>
