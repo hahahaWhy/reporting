@@ -71,7 +71,6 @@ public class DoctorLoginController {
 				//写cookie和session
 				request.getSession().setAttribute("mail", mail);
 				reportDtoList=patientHomePageService.findAllPatientReport();
-				System.out.println("#"+reportDtoList.size());
 				model.addAttribute("reportDtoList",reportDtoList);
 		        return "doctorHomePage";
 			}

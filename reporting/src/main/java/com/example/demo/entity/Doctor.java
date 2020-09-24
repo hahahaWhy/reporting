@@ -10,6 +10,8 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
+
+@Data
 @Component //生成当前类的实例对象存到IOC容器中
 //@ConfigurationProperties(prefix = "doctor")//将配置文件前缀名为doctor的属性值映射到当前类的变量上
 @Document(collection  = "doctor")
@@ -23,34 +25,5 @@ public class Doctor implements Serializable {
 //	@Indexed//添加一个单字段索引
 	private String name;
 	private String password;
-	public String getId() {
-		return id;
-	}
-	public void setId(String id) {
-		this.id = id;
-	}
-	public String getMail() {
-		return mail;
-	}
-	public void setMail(String mail) {
-		this.mail = mail;
-	}
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
-	public String getPassword() {
-		return password;
-	}
-	public void setPassword(String password) {
-		this.password = password;
-	}
-	@Override
-	public String toString() {
-		return "Doctor [id=" + id + ", mail=" + mail + ", name=" + name + ", password=" + password + "]";
-	}
-	
 	
 }
