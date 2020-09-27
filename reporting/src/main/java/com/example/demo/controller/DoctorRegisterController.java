@@ -27,8 +27,12 @@ public class DoctorRegisterController {
 	@Autowired
 	private DoctorRegisterService doctorRegisterService;
 	
+	@RequestMapping("toDoctorRegister")
+	public String toDoctorRegister() {
+		return "doctorRegister";
+	}
 	
-	@RequestMapping("/toDoctorRegister")
+	@RequestMapping("/doDoctorRegister")
 	public String doctorRegister(@RequestParam(value = "mail",required = false) String mail,
 			@RequestParam(value = "name",required = false) String name,
 			@RequestParam(value = "password",required = false) String password,
@@ -66,7 +70,7 @@ public class DoctorRegisterController {
 			response.setContentType("text/html;charset=utf-8");
 	        PrintWriter out = response.getWriter();
 	        out.print("<script type='text/javascript'>alert('注册成功!');</script>");
-	        return "doctorLogin";
+	        return "redirect:toDoctorLogin";
 		}catch (Exception e) {
 			// TODO: handle exception
 			model.addAttribute("error", "注册失败！");

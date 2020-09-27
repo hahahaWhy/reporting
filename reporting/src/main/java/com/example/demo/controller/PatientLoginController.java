@@ -1,11 +1,9 @@
 package com.example.demo.controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,10 +11,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.example.demo.dto.DiagnoseReportDto;
 import com.example.demo.entity.Patient;
 import com.example.demo.provide.EmailVerification;
-import com.example.demo.service.PatientHomePageService;
 import com.example.demo.service.PatientLoginService;
 
 @Controller
@@ -30,11 +26,12 @@ public class PatientLoginController {
 	@Autowired
 	private PatientLoginService patientLoginService;
 	
-	@Autowired
-	private PatientHomePageService patientHomePageService;
+
 	
-	@Autowired
-	private List<DiagnoseReportDto> reportDtoList;
+	@RequestMapping("toUserLogin")
+	public String toUserLogin() {
+		return "userLogin";
+	}
 	
 	@RequestMapping("/doUserLogin")
 	public String doctorRegister(@RequestParam(value = "mail",required = false) String mail,
@@ -70,9 +67,8 @@ public class PatientLoginController {
 			else {
 				//写cookie和session
 				request.getSession().setAttribute("mail", mail);
-				reportDtoList=patientHomePageService.findPatientReport(mail);
-				model.addAttribute("reportDtoList",reportDtoList);
-		        return "userHomePage";
+				String language=(String) request.getSession().getAttribute("l");
+		        return "redirect:toUserHomePage?l="+language;
 			}
 		}
 		

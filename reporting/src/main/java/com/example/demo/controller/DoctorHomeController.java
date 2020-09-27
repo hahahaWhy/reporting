@@ -24,6 +24,21 @@ public class DoctorHomeController {
 
 	@Autowired
 	private List<DiagnoseReportDto> reportDtoList;
+	
+	@RequestMapping("toDoctorHomePage")
+	public String toDoctorHomePage(Model model,HttpServletRequest request,HttpServletResponse response) throws IOException {
+		String doctorMail = (String) request.getSession().getAttribute("mail");
+		if (doctorMail == null || doctorMail.length() == 0) {
+			// 没有登录
+			response.setContentType("text/html;charset=utf-8");
+			PrintWriter out = response.getWriter();
+			out.print("<script type='text/javascript'>alert('没有登录，无法访问!');</script>");
+			return "index";
+		}
+		reportDtoList=patientHomePageService.findAllPatientReport();
+		model.addAttribute("reportDtoList",reportDtoList);
+		return "doctorHomePage";
+	}
 
 	@RequestMapping("/toSearchPatient")
 	public String toSearchPatient(@RequestParam(value = "searchText", required = false) String searchText,

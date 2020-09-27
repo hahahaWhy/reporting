@@ -12,12 +12,15 @@
 <body class="text-center">
 <!--  用户登录form表单 -->
 <form class="form-signin" action="toOtherPage">
-    <h1 class="h3 mb-3 font-weight-normal">首页</h1>
 
-    <button class="btn btn-lg btn-primary btn-block" type="submit" id="doctorLogin" name="doctorLogin" value="1">医生登录</button>
-    <button class="btn btn-lg btn-primary btn-block" type="submit" id="doctorRe" name="doctorRe" value="2">医生注册</button>
-    <button class="btn btn-lg btn-primary btn-block" type="submit" id="userLogin" name="userLogin" value="3">用户登录</button>
-    <button class="btn btn-lg btn-primary btn-block" type="submit" id="userRe" name="userRe" value="4">用户注册</button>
+    <h1 class="h3 mb-3 font-weight-normal" th:text="#{index.tap}">首页</h1>
+
+    <button class="btn btn-lg btn-primary btn-block" type="submit" id="doctorLogin" name="doctorLogin" value="1" th:text="#{button.b1}">医生登录</button>
+    <button class="btn btn-lg btn-primary btn-block" type="submit" id="doctorRe" name="doctorRe" value="2" th:text="#{button.b2}">医生注册</button>
+    <button class="btn btn-lg btn-primary btn-block" type="submit" id="userLogin" name="userLogin" value="3" th:text="#{button.b3}">用户登录</button>
+    <button class="btn btn-lg btn-primary btn-block" type="submit" id="userRe" name="userRe" value="4" th:text="#{button.b4}">用户注册</button>
+    <a class="btn btn-sm" th:href="@{/toindex(l='zh_CN')}">中文</a>
+    <a class="btn btn-sm" th:href="@{/toindex(l='en_US')}">English</a>
 </form>
 </body>
 </html>

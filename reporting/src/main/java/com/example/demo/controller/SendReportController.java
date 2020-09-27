@@ -36,6 +36,10 @@ public class SendReportController {
 	@Autowired
 	private EmailVerification emailVerification;
 	
+//	@RequestMapping("toSendReport")
+//	public String toSendReport() {
+//		return "sendReport";
+//	}
 	
 	@RequestMapping("/doSendReport")
 	public String doSendReport(@RequestParam(value = "patientMail", required = false) String patientMail,

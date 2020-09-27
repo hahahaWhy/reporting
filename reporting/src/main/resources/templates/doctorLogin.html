@@ -12,14 +12,14 @@
 <body class="text-center">
 <!--  用户登录form表单 -->
 <form class="form-signin" action="doDoctorLogin" method="post">
-    <h1 class="h3 mb-3 font-weight-normal">医生登录</h1>
+    <h1 class="h3 mb-3 font-weight-normal" th:text="#{doctorLogin.tap}">医生登录</h1>
     <input type="email" class="form-control" autofocus=""
-			placeholder="Email" id="mail" name="mail" th:value="${mail}">
-    <input type="password" class="form-control" placeholder="密码" id="password" name="password"
+			th:placeholder="#{doctorLogin.mail}" id="mail" name="mail" th:value="${mail}">
+    <input type="password" class="form-control" th:placeholder="#{doctorLogin.password}" id="password" name="password"
 			th:value="${password}">
 	<div class="alert alert-danger" role="alert" th:text="${error}"
 			th:if="${error!=null}"></div>
-    <button class="btn btn-lg btn-primary btn-block" type="submit">登录</button>
+    <button class="btn btn-lg btn-primary btn-block" type="submit" th:text="#{doctorLogin.button}">登录</button>
 </form>
 </body>
 </html>

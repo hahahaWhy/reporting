@@ -34,7 +34,13 @@ public class DoctorLoginController {
 	
 	
 	@Autowired
-	private PatientHomePageService patientHomePageService;
+	private PatientHomePageService patientHomePageService;	
+	
+	@RequestMapping("toDoctorLogin")
+	public String toDoctorLogin() {
+		return "doctorLogin";
+	}
+	
 	
 	@RequestMapping("/doDoctorLogin")
 	public String doctorRegister(@RequestParam(value = "mail",required = false) String mail,
@@ -70,9 +76,8 @@ public class DoctorLoginController {
 			else {
 				//写cookie和session
 				request.getSession().setAttribute("mail", mail);
-				reportDtoList=patientHomePageService.findAllPatientReport();
-				model.addAttribute("reportDtoList",reportDtoList);
-		        return "doctorHomePage";
+				String language=(String) request.getSession().getAttribute("l");
+		        return "redirect:toDoctorHomePage?l="+language;
 			}
 		}
 		

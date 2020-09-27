@@ -23,6 +23,22 @@ public class PatientHomePageController {
 
 	@Autowired
 	private List<DiagnoseReportDto> reportDtoList;
+	
+	
+	@RequestMapping("toUserHomePage")
+	public String toUserHomePage(HttpServletRequest request,Model model,HttpServletResponse response) throws IOException {
+		String mail=(String) request.getSession().getAttribute("mail");
+		if (mail == null || mail.length() == 0) {
+			// 没有登录
+			response.setContentType("text/html;charset=utf-8");
+			PrintWriter out = response.getWriter();
+			out.print("<script type='text/javascript'>alert('没有登录，无法访问!');</script>");
+			return "index";
+		} 
+		reportDtoList=patientHomePageService.findPatientReport(mail);
+		model.addAttribute("reportDtoList",reportDtoList);
+		return "userHomePage";
+	}
 
 	@RequestMapping("/doPatientPageSearch")
 	public String showUserPage(@RequestParam(value = "searchText", required = false) String searchText, Model model,

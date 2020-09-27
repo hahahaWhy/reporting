@@ -27,12 +27,12 @@
 
             <form class="navbar-form navbar-left" action="doPatientPageSearch" method="post">
                 <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Search" th:value="${searchText}" id="searchText" name="searchText">
+                    <input type="text" class="form-control" th:placeholder="#{userHomePage.search}" th:value="${searchText}" id="searchText" name="searchText">
                 </div>
-                <button type="submit" class="btn btn-default">搜索</button>
+                <button type="submit" class="btn btn-default" th:text="#{userHomePage.searchButton}"></button>
             </form>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="/reporting/toindex">退出登录</a></li>
+                <li><a href="/reporting/logout" th:text="#{userHomePage.loginOutButton}">退出登录</a></li>
             </ul>
         </div>
     </div>
@@ -42,11 +42,11 @@
         <thead>
             <tr>
                 <th class="text-center">#</th>
-                <th class="text-center">诊断描述</th>
-                <th class="text-center">诊断药物</th>
-                <th class="text-center">诊断医生</th>
-                <th class="text-center">诊断医生邮箱</th>
-                <th class="text-center">诊断日期</th>
+                <th class="text-center" th:text="#{userHomePage.report}">诊断描述</th>
+                <th class="text-center" th:text="#{userHomePage.medicine}">诊断药物</th>
+                <th class="text-center" th:text="#{userHomePage.doctorName}">诊断医生</th>
+                <th class="text-center" th:text="#{userHomePage.doctorMail}">诊断医生邮箱</th>
+                <th class="text-center" th:text="#{userHomePage.reportTime}">诊断日期</th>
             </tr>
         </thead>
     <tbody>

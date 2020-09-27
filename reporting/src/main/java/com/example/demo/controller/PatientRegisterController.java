@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import java.io.PrintWriter;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,12 +11,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.view.RedirectView;
 
 import com.example.demo.entity.DiagnoseReport;
-import com.example.demo.entity.Doctor;
 import com.example.demo.entity.Patient;
 import com.example.demo.provide.EmailVerification;
-import com.example.demo.service.DoctorRegisterService;
 import com.example.demo.service.PatientRegisterService;
 
 @Controller
@@ -32,8 +33,19 @@ public class PatientRegisterController {
 	@Autowired
 	private PatientRegisterService patientRegisterService;
 	
+	@RequestMapping("toUserRegister")
+	public RedirectView toUserRegister(HttpServletRequest request,RedirectAttributes redirectAttributes) {
+		String language=(String) request.getSession().getAttribute("l");
+		System.out.println(language);
+		RedirectView redirectTarget = new RedirectView();
+        redirectTarget.setContextRelative(true);
+        redirectTarget.setUrl("userRegister");
+
+        redirectAttributes.addAttribute("l", language);
+		return redirectTarget;
+	}
 	
-	@RequestMapping("/toPatientRegister")
+	@RequestMapping("/doPatientRegister")
 	public String doctorRegister(@RequestParam(value = "mail",required = false) String mail,
 			@RequestParam(value = "name",required = false) String name,
 			@RequestParam(value = "password",required = false) String password,
@@ -72,7 +84,7 @@ public class PatientRegisterController {
 			response.setContentType("text/html;charset=utf-8");
 	        PrintWriter out = response.getWriter();
 	        out.print("<script type='text/javascript'>alert('注册成功!');</script>");
-	        return "userLogin";
+	        return "redirect:toUserLogin";
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			model.addAttribute("error", "注册失败！");

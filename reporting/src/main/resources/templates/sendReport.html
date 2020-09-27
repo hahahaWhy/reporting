@@ -20,24 +20,24 @@
             </div>
             <form action="doSendReport" method="post">
                 <div class="form-group">
-                    <label for="patientMail">Email</label>
-                    <input type="email" class="form-control" id="patientMail" name="patientMail" placeholder="Email" th:value="${patientMail}">
+                    <label for="patientMail" th:text="#{sendReport.mailText}">Email</label>
+                    <input type="email" class="form-control" id="patientMail" name="patientMail" th:value="${patientMail}">
                 </div>
                 <div class="form-group">
-                    <label for="patientName">姓名</label>
-                    <input type="text" class="form-control" id="patientName" name="patientName" placeholder="姓名" th:value="${patientName}">
+                    <label for="patientName" th:text="#{sendReport.nameText}">姓名</label>
+                    <input type="text" class="form-control" id="patientName" name="patientName" th:value="${patientName}">
                 </div>
                 <div class="form-group">
-                    <label for="report">诊断报告</label>
+                    <label for="report" th:text="#{sendReport.report}">诊断报告</label>
                     <textarea class="form-control" rows="10" id="report" name="report" th:text="${report}"></textarea>
                 </div>
                 <div>
-                    <label for="medicine">药物</label>
+                    <label for="medicine" th:text="#{sendReport.medicine}">药物</label>
                     <textarea class="form-control" rows="10" id="medicine" name="medicine" th:text="${medicine}"></textarea>
                 </div>
                 <div class="alert alert-danger" role="alert" th:text="${error}"
 			th:if="${error!=null}"></div>
-                <button class="btn btn-success btn-send" id="send" type="submit">发送</button>
+                <button class="btn btn-success btn-send" id="send" type="submit" th:text="#{sendReport.sendButton}">发送</button>
             </form>
 
 
