@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.demo.dto.DiagnoseReportDto;
 import com.example.demo.service.PatientHomePageService;
@@ -24,6 +25,7 @@ public class DoctorHomeController {
 
 	@Autowired
 	private List<DiagnoseReportDto> reportDtoList;
+	
 	
 	@RequestMapping("toDoctorHomePage")
 	public String toDoctorHomePage(Model model,HttpServletRequest request,HttpServletResponse response) throws IOException {
@@ -39,10 +41,15 @@ public class DoctorHomeController {
 		model.addAttribute("reportDtoList",reportDtoList);
 		return "doctorHomePage";
 	}
-
+	
+	@RequestMapping("toSearchPatientNew")
+	public String toSearchPatientNew() {
+		return "doctorHomePage";
+	}
+	
 	@RequestMapping("/toSearchPatient")
 	public String toSearchPatient(@RequestParam(value = "searchText", required = false) String searchText,
-			HttpServletRequest request, HttpServletResponse response, Model model) throws IOException {
+			HttpServletRequest request, HttpServletResponse response, Model model,RedirectAttributes redirectAttributes) throws IOException {
 		String doctorMail = (String) request.getSession().getAttribute("mail");
 		if (doctorMail == null || doctorMail.length() == 0) {
 			// 没有登录
@@ -51,13 +58,14 @@ public class DoctorHomeController {
 			out.print("<script type='text/javascript'>alert('没有登录，无法访问!');</script>");
 			return "index";
 		}
-		model.addAttribute("searchText", searchText);
+		redirectAttributes.addFlashAttribute("searchText", searchText);
 		reportDtoList = patientHomePageService.findPatientReportByPatientName(searchText);
-		model.addAttribute("reportDtoList", reportDtoList);
-		return "doctorHomePage";
+		redirectAttributes.addFlashAttribute("reportDtoList", reportDtoList);
+		String language=(String) request.getSession().getAttribute("l");
+		return "redirect:toSearchPatientNew?l="+language;
 	}
 	
-	@RequestMapping("/toSendReport")
+	@RequestMapping("toSendReport")
 	public String toSendReport(@RequestParam(value = "searchText", required = false) String searchText,
 			HttpServletRequest request, HttpServletResponse response) throws IOException {
 		String doctorMail = (String) request.getSession().getAttribute("mail");
@@ -68,7 +76,8 @@ public class DoctorHomeController {
 			out.print("<script type='text/javascript'>alert('没有登录，无法访问!');</script>");
 			return "index";
 		}
-		return "sendReport";
+		String language=(String) request.getSession().getAttribute("l");
+		return "redirect:toSendReportPage?l="+language;
 	}
 
 }

@@ -44,7 +44,7 @@ public class IndexController {
 		if ("3".equals(userLogin))
 			return "redirect:toUserLogin?l="+language;
 		if ("4".equals(userRe))
-			return "redirect:toUserRegister";
+			return "redirect:toUserRegister?l="+language;
 
 		return "index";
 	}

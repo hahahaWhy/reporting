@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.demo.dto.DiagnoseReportDto;
 import com.example.demo.service.PatientHomePageService;
@@ -40,9 +41,14 @@ public class PatientHomePageController {
 		return "userHomePage";
 	}
 
+	@RequestMapping("toUserHomePageNew")
+	public String toUserHomePageNew() {
+		return "userHomePage";
+		
+	}
 	@RequestMapping("/doPatientPageSearch")
 	public String showUserPage(@RequestParam(value = "searchText", required = false) String searchText, Model model,
-			HttpServletRequest request,HttpServletResponse response) throws IOException {
+			HttpServletRequest request,HttpServletResponse response,RedirectAttributes redirectAttributes) throws IOException {
 
 		String patientMail = (String) request.getSession().getAttribute("mail");
 		if (patientMail == null || patientMail.length() == 0) {
@@ -52,11 +58,11 @@ public class PatientHomePageController {
 			out.print("<script type='text/javascript'>alert('没有登录，无法访问!');</script>");
 			return "index";
 		} 
-
-		model.addAttribute("searchText", searchText);
+		redirectAttributes.addFlashAttribute("searchText", searchText);
 		reportDtoList = patientHomePageService.findPatientReportBySearchText(searchText,patientMail);
-		model.addAttribute("reportDtoList", reportDtoList);
-		return "userHomePage";
+		redirectAttributes.addFlashAttribute("reportDtoList", reportDtoList);
+		String language=(String) request.getSession().getAttribute("l");
+		return "redirect:toUserHomePageNew?l="+language;
 	}
 
 }

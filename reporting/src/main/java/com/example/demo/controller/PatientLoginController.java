@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.demo.entity.Patient;
 import com.example.demo.provide.EmailVerification;
@@ -29,45 +30,47 @@ public class PatientLoginController {
 
 	
 	@RequestMapping("toUserLogin")
-	public String toUserLogin() {
+	public String toUserLogin() {	
 		return "userLogin";
 	}
+	
+	private String url="redirect:toUserLogin?l=";
 	
 	@RequestMapping("/doUserLogin")
 	public String doctorRegister(@RequestParam(value = "mail",required = false) String mail,
 			@RequestParam(value = "password",required = false) String password,
-			Model model,HttpServletRequest request
+			Model model,HttpServletRequest request,RedirectAttributes redirectAttributes
 			) throws IOException {
 		//回显
-		model.addAttribute("mail", mail);
-		model.addAttribute("password", password);
+		redirectAttributes.addFlashAttribute("mail", mail);
+		redirectAttributes.addFlashAttribute("password", password);
+		String language=(String) request.getSession().getAttribute("l");
 		//判断传入参数是否合法
 		if(!EmailVerification.isEmail(mail)) {
-			model.addAttribute("error", "email格式错误");
-			return "userLogin";
+			redirectAttributes.addFlashAttribute("error", "email格式错误");
+			return url+language;
 		}
 		if(password==""||password==null) {
-			model.addAttribute("error", "密码不能为空");
-			return "userLogin";
+			redirectAttributes.addFlashAttribute("error", "密码不能为空");
+			return url+language;
 		}
 		//查看mail是否存在
 		patientList=patientLoginService.findDcotorByMail(mail);
 		if(patientList.isEmpty()) {
-			model.addAttribute("error", "email不存在");
-			return "userLogin";
+			redirectAttributes.addFlashAttribute("error", "email不存在");
+			return url+language;
 		}
 		else {
 			patient=patientList.get(0);
 			//登录失败
 			if(!patient.getPassword().equals(password)) {
-				model.addAttribute("error", "密码错误！");
-				return "userLogin";
+				redirectAttributes.addFlashAttribute("error", "密码错误！");
+				return url+language;
 			}
 			//登录成功
 			else {
 				//写cookie和session
 				request.getSession().setAttribute("mail", mail);
-				String language=(String) request.getSession().getAttribute("l");
 		        return "redirect:toUserHomePage?l="+language;
 			}
 		}
